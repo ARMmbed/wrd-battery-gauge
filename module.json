@@ -1,0 +1,19 @@
+{
+  "name": "wrd-fuel-gauge",
+  "version": "0.0.0",
+  "description": "Wearable Reference Design battery fuel guage API.",
+  "keywords": [],
+  "author": "Marcus Chang <marcus.chang@arm.com>",
+  "repository": {
+    "url": "git@github.com:ARMmbed/wrd-fuel-gauge.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/wrd-fuel-gauge",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "targetDependencies": {
+    "max1704": {
+      "wrd-fuel-gauge-max1704": "^2.0.0"
+    }
+  }
+}
