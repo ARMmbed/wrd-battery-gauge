@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-#ifndef __WRD_FUEL_GAUGE_H__
-#define __WRD_FUEL_GAUGE_H__
+#ifndef __WRD_BATTERY_GAUGE_H__
+#define __WRD_BATTERY_GAUGE_H__
 
 #include "mbed-drivers/mbed.h"
 
@@ -25,7 +25,7 @@
 
 using namespace mbed::util;
 
-namespace FuelGauge
+namespace BatteryGauge
 {
     typedef enum {
         BatteryCapacity,
@@ -96,20 +96,20 @@ namespace FuelGauge
 }
 
 #if 0
-class FuelGauge
+class BatteryGauge
 {
 public:
     /**
-     * @brief Battery fuel gauge constructor.
+     * @brief Battery Battery gauge constructor.
      */
-    FuelGauge(void)
-        :   gauge(SharedPointer<FuelGaugeBase>(new FuelGaugeImplementation()))
+    BatteryGauge(void)
+        :   gauge(SharedPointer<BatteryGaugeBase>(new BatteryGaugeImplementation()))
     {}
 
 
 private:
-    SharedPointer<FuelGaugeBase> gauge;
+    SharedPointer<BatteryGaugeBase> gauge;
 };
 #endif
 
-#endif // __WRD_FUEL_GAUGE_H__
+#endif // __WRD_BATTERY_GAUGE_H__

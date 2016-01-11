@@ -1,2 +1,2 @@
-# wrd-fuel-gauge
-Wearable Reference Design battery fuel guage API.
+# wrd-battery-gauge
+Wearable Reference Design battery battery guage API.

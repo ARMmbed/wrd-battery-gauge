@@ -15,54 +15,62 @@
  * limitations under the License.
  */
 
-#ifndef __WRD_FUEL_GAUGE_BASE_H__
-#define __WRD_FUEL_GAUGE_BASE_H__
+#ifndef __WRD_BATTERY_GAUGE_NOT_PRESENT_H__
+#define __WRD_BATTERY_GAUGE_NOT_PRESENT_H__
+
+#include "wrd-battery-gauge/BatteryGaugeNotPresent.h"
 
 #include "mbed-drivers/mbed.h"
 #include "core-util/FunctionPointer.h"
 
 using namespace mbed::util;
 
-class FuelGaugeBase
+class BatteryGaugeNotPresent : public BatteryGaugeBase
 {
-protected:
-    FuelGaugeBase(void) { }
-
 public:
-    virtual ~FuelGaugeBase(void) { }
-
     /**
      * @brief Get battery level in permille.
+     * @details This function always returns -1.
      *
-     * @param callback Function to be called with the fuel level as parameter.
+     * @param callback Function to be called with the battery level as parameter.
      */
-    virtual void getPerMille(FunctionPointer1<void, uint16_t> callback) = 0;
+    virtual void getPerMille(FunctionPointer1<void, uint16_t> callback)
+    {
+        minar::Scheduler::postCallback(callback.bind(-1));
+    }
 
     /**
      * @brief Get battery voltage in milli volt.
+     * @details This function always returns -1.
      *
      * @param callback Function to be called with the battery voltage as parameter.
      */
-    virtual void getMilliVolt(FunctionPointer1<void, uint16_t> callback) = 0;
+    virtual void getMilliVolt(FunctionPointer1<void, uint16_t> callback)
+    {
+        minar::Scheduler::postCallback(callback.bind(-1));
+    }
 
     /**
      * @brief Set callback function for when the battery level changes.
-     * @details The callback function is be called every time the battery
-     *          level changes approximately +/- 1%. The exact value may depend
-     *          upon the granularity supported by the hardware and what offers
-     *          the best tradeof between power consumption and precision.
+     * @details With no battery present, no changes are reported.
      *
      * @param callback Function to be called when the battery level has changed
      *                 with the new level in permille as the parameter.
      */
-    virtual void setPerMilleChangeCallback(FunctionPointer1<void, uint16_t> callback) = 0;
+    virtual void setPerMilleChangeCallback(FunctionPointer1<void, uint16_t> callback)
+    {
+        (void) callback;
+    }
 
     /**
      * @brief Cancel callback function set up by setPerMilleChangeCallback.
      *
      * @param callback Function to be removed from callback list.
      */
-    virtual void cancelCallback(FunctionPointer1<void, uint16_t> callback) = 0;
+    virtual void cancelCallback(FunctionPointer1<void, uint16_t> callback)
+    {
+        (void) callback;
+    }
 };
 
-#endif // __WRD_FUEL_GAUGE_BASE_H__
+#endif // __WRD_BATTERY_GAUGE_BASE_H__

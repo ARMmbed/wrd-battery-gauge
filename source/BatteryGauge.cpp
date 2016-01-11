@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-#include "wrd-fuel-gauge/FuelGauge.h"
+#include "wrd-battery-gauge/BatteryGauge.h"
 
-#include "wrd-fuel-gauge/FuelGaugeBase.h"
+#include "wrd-battery-gauge/BatteryGaugeBase.h"
 #include "core-util/CriticalSectionLock.h"
 
 #include <queue>
 #include <list>
 
 #if YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_PRESENT
-#include "wrd-fuel-gauge/FuelGaugeImplementation.h"
+#include "wrd-battery-gauge/BatteryGaugeImplementation.h"
 #else
-#include "wrd-fuel-gauge/FuelGaugeNotPresent.h"
+#include "wrd-battery-gauge/BatteryGaugeNotPresent.h"
 #endif
 
 #if 0
@@ -36,20 +36,20 @@
 #define printf(...)
 #endif
 
-namespace FuelGauge
+namespace BatteryGauge
 {
 // private
 #if YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_PRESENT
-    static FuelGaugeImplementation realGauge;
+    static BatteryGaugeImplementation realGauge;
 #else
-    static FuelGaugeNotPresent realGauge;
+    static BatteryGaugeNotPresent realGauge;
 #endif
-    static FuelGaugeBase& gauge = realGauge;
+    static BatteryGaugeBase& gauge = realGauge;
 
     static bool doInit = true;
     static int16_t voltage = -1;
     static int16_t capacity = -1;
-    static std::queue<FuelGauge::transaction_t> sendQueue;
+    static std::queue<BatteryGauge::transaction_t> sendQueue;
     static std::list<FunctionPointer1<void, int16_t> > updateList;
 
     static void processQueueTask(void);
@@ -58,7 +58,7 @@ namespace FuelGauge
 // public
     void init(void)
     {
-        printf("fuel: init\r\n");
+        printf("battery: init\r\n");
 
         doInit = false;
 
@@ -106,7 +106,7 @@ namespace FuelGauge
         /* only insert function pointer in list if not there already. */
         if (notFound)
         {
-            printf("fuel: insert\r\n");
+            printf("battery: insert\r\n");
 
             updateList.push_back(callback);
         }
@@ -127,7 +127,7 @@ namespace FuelGauge
         {
             if (*iter == callback)
             {
-                printf("fuel: remove\r\n");
+                printf("battery: remove\r\n");
 
                 updateList.erase(iter);
                 break;
@@ -188,13 +188,13 @@ namespace FuelGauge
         // only process if queue is not empty
         if (sendQueue.size() > 0)
         {
-            FuelGauge::transaction_t action = sendQueue.front();
+            BatteryGauge::transaction_t action = sendQueue.front();
 
-            if (action.type == FuelGauge::BatteryCapacity)
+            if (action.type == BatteryGauge::BatteryCapacity)
             {
                 gauge.getPerMille(sendDoneTask);
             }
-            else if (action.type == FuelGauge::BatteryVoltage)
+            else if (action.type == BatteryGauge::BatteryVoltage)
             {
                 gauge.getMilliVolt(sendDoneTask);
             }
@@ -206,10 +206,10 @@ namespace FuelGauge
     */
     static void sendDoneTask(uint16_t value)
     {
-        FuelGauge::transaction_t action = sendQueue.front();
+        BatteryGauge::transaction_t action = sendQueue.front();
         sendQueue.pop();
 
-        if (action.type == FuelGauge::BatteryCapacity)
+        if (action.type == BatteryGauge::BatteryCapacity)
         {
             /* Notify subscribers if capacity has changed. */
             if (capacity != value)
@@ -218,7 +218,7 @@ namespace FuelGauge
 
                 for ( ; iter != updateList.end(); ++iter)
                 {
-                    printf("fuel: callback\r\n");
+                    printf("battery: callback\r\n");
 
                     /* Call callback immediately and not through the scheduler
                        in order to avoid the race condition where a callback
@@ -231,7 +231,7 @@ namespace FuelGauge
                 capacity = value;
             }
         }
-        else if (action.type == FuelGauge::BatteryVoltage)
+        else if (action.type == BatteryGauge::BatteryVoltage)
         {
             voltage = value;
         }
