@@ -165,7 +165,11 @@ namespace BatteryGauge
             init();
         }
 
+#if YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_PRESENT
         return YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_CAPACITY;
+#else
+        return -1;
+#endif
     }
 
     uint32_t getAverageCurrent(void)
@@ -176,7 +180,11 @@ namespace BatteryGauge
             init();
         }
 
+#if YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_PRESENT
         return YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_ESTIMATED_CURRENT;
+#else
+        return -1;
+#endif
     }
 
 // private
