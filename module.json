@@ -1,6 +1,6 @@
 {
   "name": "wrd-battery-gauge",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Wearable Reference Design battery battery guage API.",
   "keywords": [],
   "author": "Marcus Chang <marcus.chang@arm.com>",
