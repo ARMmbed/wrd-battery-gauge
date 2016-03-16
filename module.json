@@ -11,11 +11,11 @@
   "homepage": "https://github.com/ARMmbed/wrd-battery-gauge",
   "license": "Apache-2.0",
   "dependencies": {
-    "mbed-drivers": "~0.12.0"
+    "mbed-drivers": "^1.0.0"
   },
   "targetDependencies": {
     "max1704": {
-      "wrd-battery-gauge-max1704": "^4.0.0"
+      "wrd-battery-gauge-max1704": "^5.0.0"
     }
   }
 }
