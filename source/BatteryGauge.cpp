@@ -23,7 +23,7 @@
 #include <queue>
 #include <list>
 
-#if YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_PRESENT
+#if YOTTA_CFG_HARDWARE_WRD_BATTERY_PRESENT
 #include "wrd-battery-gauge/BatteryGaugeImplementation.h"
 #else
 #include "wrd-battery-gauge/BatteryGaugeNotPresent.h"
@@ -39,7 +39,7 @@
 namespace BatteryGauge
 {
 // private
-#if YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_PRESENT
+#if YOTTA_CFG_HARDWARE_WRD_BATTERY_PRESENT
     static BatteryGaugeImplementation realGauge;
 #else
     static BatteryGaugeNotPresent realGauge;
@@ -165,8 +165,8 @@ namespace BatteryGauge
             init();
         }
 
-#if YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_PRESENT
-        return YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_CAPACITY;
+#if YOTTA_CFG_HARDWARE_WRD_BATTERY_PRESENT
+        return YOTTA_CFG_HARDWARE_WRD_BATTERY_CAPACITY;
 #else
         return -1;
 #endif
@@ -180,8 +180,8 @@ namespace BatteryGauge
             init();
         }
 
-#if YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_PRESENT
-        return YOTTA_CFG_HARDWARE_WEARABLE_REFERENCE_DESIGN_BATTERY_ESTIMATED_CURRENT;
+#if YOTTA_CFG_HARDWARE_WRD_BATTERY_PRESENT
+        return YOTTA_CFG_HARDWARE_WRD_BATTERY_ESTIMATED_CURRENT;
 #else
         return -1;
 #endif
