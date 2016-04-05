@@ -15,6 +15,7 @@
   },
   "targetDependencies": {
     "max1704": {
+      "wrd-gpio-switch": "^1.0.0",
       "wrd-battery-gauge-max1704": "^5.0.0"
     }
   }
